@@ -10,6 +10,7 @@ class Names extends StatefulWidget {
 }
 
 class _NamesState extends State<Names> {
+  //list of gender to map through its index dynamically
   List<String> _genders = [
     'Male',
     'Female',
@@ -18,11 +19,13 @@ class _NamesState extends State<Names> {
   List<String> _limits = ['10', '20', '30', '40'];
   String _genderValue = 'M';
   String _limitValue = '10';
+  //create object for clas requestNAmes which is in kurdish_name_request.dart file
   RequestNames _requestNames = RequestNames();
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        //row is used for dropDown buttons
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -64,12 +67,16 @@ class _NamesState extends State<Names> {
             ),
           ],
         ),
+        //the responded data showed in expanstion tile
         Expanded(
           child: Container(
             padding: const EdgeInsets.all(8),
+            //Directionality widget used to set widgets directions.
             child: Directionality(
               textDirection: TextDirection.rtl,
+              //futureBuilder widget is used when we have some data we get it from api, sfter the value we want is know .etc.
               child: FutureBuilder(
+                //call getnames() method with help of object to send request to api.
                 future: _requestNames.getnames(_limitValue, _genderValue),
                 builder: ((ctx, AsyncSnapshot<KurdishNamesModal> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
