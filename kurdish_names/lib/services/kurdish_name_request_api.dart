@@ -29,4 +29,21 @@ class RequestNames {
             );
     return KurdishNamesModal.fromJson(response.body);
   }
+
+//method to vote for names
+  Future vote(String id, bool isPosative) async {
+    //url path for vote
+    String url = "https://nawikurdi.com/api/vote";
+    //define a variable for impact if its posative or negative used for voting.
+
+    //body property because  postman software i used body and send request inside postman's body to test the api .
+    await http.post(
+      Uri.parse(url),
+      body: {
+        "name_id": id,
+        "uid": '${id}abc',
+        "impact": isPosative == true ? 'positive' : 'negative',
+      },
+    );
+  }
 }
