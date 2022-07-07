@@ -92,11 +92,54 @@ class _NamesState extends State<Names> {
                     itemCount: snapshot.data!.names.length,
                     itemBuilder: (ctx, index) {
                       return ExpansionTile(
+                        leading: Text('${snapshot.data!.names[index].nameId}'),
                         title: Text(
                           snapshot.data!.names[index].name,
                         ),
                         children: [
                           Text(snapshot.data!.names[index].desc),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  _requestNames
+                                      .vote(
+                                    snapshot.data!.names[index].nameId
+                                        .toString(),
+                                    true,
+                                  )
+                                      .then((value) {
+                                    setState(() {});
+                                  });
+                                },
+                                icon: const Icon(Icons.thumb_up),
+                                label: Text(
+                                  '${snapshot.data!.names[index].positiveVotes}',
+                                ),
+                              ),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  _requestNames
+                                      .vote(
+                                    snapshot.data!.names[index].nameId
+                                        .toString(),
+                                    false,
+                                  )
+                                      .then((value) {
+                                    setState(() {});
+                                  });
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.red,
+                                ),
+                                icon: const Icon(Icons.thumb_down),
+                                label: Text(
+                                  '${snapshot.data!.names[index].negativeVotes}',
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       );
                     },
